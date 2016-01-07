@@ -30,13 +30,15 @@ public class Comp {
             }
         }
     }
-    
-    public int[][] read() {
 
-        switch (type) {
-            case 0: { return content; }
-        }
+    //public int[][] read() {
 
-    }
+    //    switch (type) {
+    //        case 0: { return content; } break;
+    //        case 1: { } break;
+    //    }
+
+    //    return content;
+    //}
 
 }
