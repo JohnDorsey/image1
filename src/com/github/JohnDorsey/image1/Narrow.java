@@ -25,6 +25,7 @@ public class Narrow {
     public void writeUp(byte[][] toWrite) {
 
         up = new byte[toWrite.length][toWrite[0].length];
+        down = new byte[2];
 
         range = toWrite[0][0];
         lowest = toWrite[0][0];
@@ -64,7 +65,7 @@ public class Narrow {
 
         down[0] = lowest;
         down[1] = range;
-        
+
 
     }
 
@@ -72,9 +73,9 @@ public class Narrow {
 
     //}
 
-    //public int[][] readUp() {
-
-    //}
+    public byte[][] readUp() {
+        return up;
+    }
 
 
 

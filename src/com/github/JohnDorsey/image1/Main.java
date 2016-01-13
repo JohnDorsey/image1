@@ -29,6 +29,13 @@ public class Main {
             show(img);
         //}
 
+
+
+        WackoArray testwa = new WackoArray();
+        testwa.writeUp(new byte[] {0,4,5,3,3}, (byte) 5);
+
+
+
         int cp = 0;
         byte[][] toCompressR = new byte[img.getWidth()][img.getHeight()];
         byte[][] toCompressG = new byte[img.getWidth()][img.getHeight()];
@@ -56,6 +63,7 @@ public class Main {
         Narrow testNarrowB = new Narrow();
         testNarrowR.writeUp(toCompressB);
         //testNarrow.writeUp(new byte[][] {{4, 6, 6, 18}, {6, 6, 18, 16}, {4, 6, 16, 18}, {18, 16, 6, 4} });
+
 
 
 
