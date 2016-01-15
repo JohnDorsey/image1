@@ -18,7 +18,17 @@ public class Narrow {
 
     }
 
-    public void writeDown(byte[] toWrite) {
+    public void writeDown(byte[] toWrite, int scanLength) {
+        down = new byte[toWrite.length];
+
+        for (int i = 0; i < toWrite.length; i++) {
+            down[i] = toWrite[i];
+        }
+
+
+        for (int i = 0; i < down.length; i++) {
+            
+        }
 
     }
 

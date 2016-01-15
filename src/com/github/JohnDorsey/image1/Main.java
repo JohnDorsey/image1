@@ -30,11 +30,16 @@ public class Main {
         //}
 
 
-        System.out.println(WackdArray.byteToString(WackdArray.setBit((byte) 5, 4, true)));
+        //System.out.println(WackdArray.byteToString(WackdArray.setBit((byte) 5, 4, true)));
 
 
         WackdArray testwa = new WackdArray();
-        testwa.writeUp(new byte[] {7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7}, (byte) 7);
+        testwa.writeUp(new byte[] {17,17,17,0,0,0,0,0,0,0,0,0,0,0,0,17,17,17}, (byte) 17);
+        //testwa.writeDown(new byte[] {112, -74, 19, 27}, 3);
+        WackdArray testreverse = new WackdArray();
+        testreverse.writeDown(testwa.readDown(), (byte) 17);
+
+
 
 
 

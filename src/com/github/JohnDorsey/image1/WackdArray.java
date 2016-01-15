@@ -33,7 +33,7 @@ public class WackdArray {
 
 
         for (int i = 0; i < toWrite.length; i++) {
-            System.out.println(byteToString(toWrite[i]) + " IN " + i);
+            System.out.println(Lengthy.byteToString(toWrite[i]) + " IN " + i);
         }
 
         down = new byte[((toWrite.length * wackdLength) / 8 ) + 1];
@@ -41,7 +41,7 @@ public class WackdArray {
 
         for (int i = 0; i < toWrite.length; i++) {
             for (int bi = 0; bi < wackdLength; bi++) {
-                nDown.set((i * wackdLength) + bi, getBit(toWrite[i], bi));
+                nDown.set((i * wackdLength) + bi, Lengthy.getBit(toWrite[i], bi));
             }
         }
 
@@ -53,18 +53,18 @@ public class WackdArray {
         //}
         for (int i = 0; i < (nDown.length() + 7); i++ ) {
             //for (int ii = 0; ii < 8; ii++) {
-            addingNow = setBit(addingNow, i % 8, nDown.get(i));
+            addingNow = Lengthy.setBit(addingNow, i % 8, nDown.get(i));
             //System.out.print("nDown" + i + "is" + nDown.get(i));
             //}
             if ((i+1) % 8 == 0) {
-                System.out.println(byteToString(addingNow) + " ADDING TO INDEX " + (i / 8));
+                System.out.println(Lengthy.byteToString(addingNow) + " ADDING TO INDEX " + (i / 8));
                 down[(i) / 8] = addingNow;
                 addingNow = 0;
             }
         }
 
         for (int i = 0; i < down.length; i++) {
-            System.out.println(byteToString(down[i]) + " OUT " + i);
+            System.out.println(Lengthy.byteToString(down[i]) + " OUT " + i);
         }
 
     }
@@ -81,6 +81,28 @@ public class WackdArray {
 
     public void writeDown(byte[] toWrite, int wackdLength) {
 
+        down = new byte[toWrite.length];
+        for (int i = 0; i < toWrite.length; i++) { down[i] = toWrite[i]; }
+        up = new byte[(down.length * 8) / wackdLength];
+
+        BitSet nUp = new BitSet();
+        for (int i = 0; i < toWrite.length; i++) {
+            for (int bi = 0; bi < 8; bi++) {
+                nUp.set((i * 8) + bi, Lengthy.getBit(toWrite[i], bi));
+            }
+        }
+
+        for (int i = 0; i < up.length; i++) {
+            for (int bi = 0; bi < wackdLength; bi++) {
+                up[i] = Lengthy.setBit(up[i], bi, nUp.get((i * wackdLength) + bi));
+            }
+        }
+
+        for (int i = 0; i < up.length; i++) {
+            System.out.println(Lengthy.byteToString(up[i]) + " writeDown up");
+        }
+
+
     }
 
 
@@ -88,32 +110,12 @@ public class WackdArray {
         return up;
     }
 
-    public void readDown() {
-
+    public byte[] readDown() {
+        return down;
     }
 
 
-    public static byte setBit(byte input, int index, boolean newValue) {
-        if (getBit(input, index) != newValue) {
-            return toggleBit(input, index);
-        } else { return input; }
-    }
 
-    public static byte toggleBit(byte input, int index) {
-        return (byte) (input ^ (1 << index));
-    }
-
-    public static boolean getBit(byte input, int index) {
-        return ((input & (1 << index)) > 0);
-    }
-
-    public static String byteToString(byte input) {
-        String result = "";
-        for (int i = 0; i < 8; i++) {
-            result = ((getBit(input, i))? "1" : "0") + result;
-        }
-        return result;
-    }
 
 
 
