@@ -27,10 +27,12 @@ public class Narrow {
 
 
         for (int i = 0; i < down.length; i++) {
-            
+
         }
 
     }
+
+
 
     public void writeUp(byte[][] toWrite) {
 

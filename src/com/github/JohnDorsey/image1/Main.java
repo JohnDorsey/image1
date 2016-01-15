@@ -64,11 +64,11 @@ public class Main {
         }
 
         Narrow testNarrowR = new Narrow();
-        testNarrowR.writeUp(toCompressR);
+        //testNarrowR.writeUp(toCompressR);
         Narrow testNarrowG = new Narrow();
-        testNarrowR.writeUp(toCompressG);
+        //testNarrowR.writeUp(toCompressG);
         Narrow testNarrowB = new Narrow();
-        testNarrowR.writeUp(toCompressB);
+        //testNarrowR.writeUp(toCompressB);
         //testNarrow.writeUp(new byte[][] {{4, 6, 6, 18}, {6, 6, 18, 16}, {4, 6, 16, 18}, {18, 16, 6, 4} });
 
 
