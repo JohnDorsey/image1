@@ -30,9 +30,11 @@ public class Main {
         //}
 
 
+        System.out.println(WackdArray.byteToString(WackdArray.setBit((byte) 5, 4, true)));
 
-        WackoArray testwa = new WackoArray();
-        testwa.writeUp(new byte[] {0,4,5,3,3}, (byte) 5);
+
+        WackdArray testwa = new WackdArray();
+        testwa.writeUp(new byte[] {7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7}, (byte) 7);
 
 
 
