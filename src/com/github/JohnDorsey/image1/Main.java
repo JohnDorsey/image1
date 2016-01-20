@@ -23,7 +23,7 @@ public class Main {
             for (int x = 0; x < 64; x++) {
                 for (int y = 0; y < 64; y++) {
                     //img.setRGB(x + 256, y + 256, (x * (x + z)) + (y * (y + z)) + (z + x + y));
-                    img.setRGB(x, y, ((x + y + 15) % 30) + 145);
+                    img.setRGB(x, y, ((x + y + 16) % 32) + 64);
                 }
             }
             show(img);
@@ -33,11 +33,11 @@ public class Main {
         //System.out.println(WackdArray.byteToString(WackdArray.setBit((byte) 5, 4, true)));
 
 
-        WackdArray testwa = new WackdArray();
-        testwa.writeUp(new byte[] {17,17,17,0,0,0,0,0,0,0,0,0,0,0,0,17,17,17}, (byte) 17);
+        //WackdArray testwa = new WackdArray();
+        //testwa.writeUp(new byte[] {17,17,17,0,0,0,0,0,0,0,0,0,0,0,0,17,17,17}, (byte) 17);
         //testwa.writeDown(new byte[] {112, -74, 19, 27}, 3);
-        WackdArray testreverse = new WackdArray();
-        testreverse.writeDown(testwa.readDown(), (byte) 17);
+        //WackdArray testreverse = new WackdArray();
+        //testreverse.writeDown(testwa.readDown(), (byte) 17);
 
 
 
@@ -64,11 +64,11 @@ public class Main {
         }
 
         Narrow testNarrowR = new Narrow();
-        //testNarrowR.writeUp(toCompressR);
+        testNarrowR.writeUp(toCompressR[0]);
         Narrow testNarrowG = new Narrow();
-        //testNarrowR.writeUp(toCompressG);
+        testNarrowR.writeUp(toCompressG[0]);
         Narrow testNarrowB = new Narrow();
-        //testNarrowR.writeUp(toCompressB);
+        testNarrowR.writeUp(toCompressB[0]);
         //testNarrow.writeUp(new byte[][] {{4, 6, 6, 18}, {6, 6, 18, 16}, {4, 6, 16, 18}, {18, 16, 6, 4} });
 
 

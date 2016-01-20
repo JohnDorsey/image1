@@ -8,14 +8,20 @@ import java.util.BitSet;
 public class WackdArray {
 
 
-    public byte[] up;
-    public byte[] down;
+    //terms invented on the spot:
+    //wacko: a number with an unusual range that wastes certain values when stored pure
+    //wackd: a wacko that simply has an unusual number of bits, or can be stored with less bits
+        //storing 5, 7, 3, 4, as 101111011100 instead of 00000101000001110000001100000100
+    //wackp: a wacko that has an unusual precision, which may be combined with other wackps of known precision by multiplication
+        //storing 5, 7, 3, 4, as the number 4 + (3*(7)) + (7*(7^2)) + (5*(7^3)) with no waste
+
+    public byte[] up; //the decoded, displayable data.
+    public byte[] down; //the encoded, savable data.
 
     public WackdArray() {
-
     }
 
-    public void writeUp(byte[]toWrite, byte max) {
+    public void writeUp(byte[]toWrite, byte max) { //this does math to find number of bits used in a wackd of a certain max value, then redirects to real method
         int wackdLength;
         for (wackdLength = 8; wackdLength > 0; wackdLength--) {
             if ((max & (1 << wackdLength)) > 0) { wackdLength++; break; }
@@ -24,7 +30,7 @@ public class WackdArray {
         writeUp(toWrite, wackdLength);
     }
 
-    public void writeUp(byte[]toWrite, int wackdLength) {
+    public void writeUp(byte[] toWrite, int wackdLength) { //this determines down based on a declaration of up
         System.out.println("WackdArray writing up...");
 
         up = new byte[toWrite.length];
@@ -46,16 +52,8 @@ public class WackdArray {
         }
 
         byte addingNow = 0;
-        //for (int i = 0; i <= nDown.length(); i++) {
-        //    addingNow = setBit(addingNow, i%8, nDown.get(i));
-        //    if (i%8 == 7) { down[i / 8] = addingNow; addingNow = 0; }
-        //    System.out.println(i + "=" + nDown.get(i));
-        //}
         for (int i = 0; i < (nDown.length() + 7); i++ ) {
-            //for (int ii = 0; ii < 8; ii++) {
             addingNow = Lengthy.setBit(addingNow, i % 8, nDown.get(i));
-            //System.out.print("nDown" + i + "is" + nDown.get(i));
-            //}
             if ((i+1) % 8 == 0) {
                 System.out.println(Lengthy.byteToString(addingNow) + " ADDING TO INDEX " + (i / 8));
                 down[(i) / 8] = addingNow;
@@ -70,7 +68,7 @@ public class WackdArray {
     }
 
 
-    public void writeDown(byte[] toWrite, byte max) {
+    public void writeDown(byte[] toWrite, byte max) { //this does math to determine the number of bits in a number of given max value, then redirects to real method
         int wackdLength;
         for (wackdLength = 8; wackdLength > 0; wackdLength--) {
             if ((max & (1 << wackdLength)) > 0) { wackdLength++; break; }
@@ -79,11 +77,11 @@ public class WackdArray {
         writeDown(toWrite, wackdLength);
     }
 
-    public void writeDown(byte[] toWrite, int wackdLength) {
+    public void writeDown(byte[] toWrite, int wackdLength) { // this determines up based on a declaration of down
 
         down = new byte[toWrite.length];
         for (int i = 0; i < toWrite.length; i++) { down[i] = toWrite[i]; }
-        up = new byte[(down.length * 8) / wackdLength];
+        up = new byte[(down.length * 8) / wackdLength]; //the number of bytes in up will be the number of times the length of a wacko can fit into the provided array
 
         BitSet nUp = new BitSet();
         for (int i = 0; i < toWrite.length; i++) {
