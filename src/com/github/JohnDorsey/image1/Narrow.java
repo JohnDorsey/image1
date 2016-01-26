@@ -13,7 +13,7 @@ public class Narrow {
     public byte[] up; //decoded, displayable data
     public byte[] down; //encoded, savable data.
                         //both are always stored while the program is running. it is impossible to change one without also changing the other.
-    public WackdArray contentWD;
+    public WackdArray contentWD = new WackdArray();
 
     public byte range; //the range of values present
     public byte lowest; //the lowest value present
@@ -25,15 +25,31 @@ public class Narrow {
     public void writeDown(byte[] toWrite) { //determines decoded ("up") form based on declaration of encoded ("down") form
         down = new byte[toWrite.length]; //actual encoded version was just declared, no need to do more work later
         byte[] downt = new byte[toWrite.length - 2];
+
+        for (int i = 0; i < toWrite.length; i++) {
+            down[i] = toWrite[i];
+        }
+
         lowest = down[0];
         range = down[1];
 
-        for (int i = 2; i < toWrite.length; i++) {
-            down[i] = toWrite[i];
-            downt[i -2] = toWrite[i];
+        for (int i = 2; i < range; i++) {
+            downt[i - 2] = down[i];
         }
 
         used = Lengthy.bytesToBitSet(downt);
+
+        byte[] downWD = new byte[(down.length - range) - 2];
+
+        for (int i = range; i < down.length; i++) {
+            downWD[i - range - 2] = down[i];
+        }
+
+        contentWD.writeDown(downWD, range);
+
+        up = contentWD.readUp();
+
+
 
     }
 
@@ -47,14 +63,14 @@ public class Narrow {
         lowest = toWrite[0];
 
         for (int i = 0; i < toWrite.length; i++) { //find the range and lowest value, as well as copy into the up array...
-                up[i]= toWrite[i]; //...actual decoded version was just declared, no need to do more work later
-                range = (byte) Math.max(range, toWrite[i]);
-                lowest = (byte) Math.min(lowest, toWrite[i]);
+            up[i]= toWrite[i]; //...actual decoded version was just declared, no need to do more work later
+            range = (byte) Math.max(range, toWrite[i]);
+            lowest = (byte) Math.min(lowest, toWrite[i]);
         }
 
         for (int i = 0; i < toWrite.length; i++) {
-                toWrite[i] -= lowest;
-                System.out.print(toWrite[i] + ",");
+            toWrite[i] -= lowest;
+            System.out.print(toWrite[i] + ",");
         }
 
         System.out.print("\n");
@@ -84,6 +100,9 @@ public class Narrow {
         for (int i = 0; i < abwUsed.length; i++) {
             down[i + 2] = abwUsed[i];
         }
+
+
+        //System.out.println((((range+7) / 8) + 2 )+ "should be" + down.length);
 
         contentWD.writeUp(toWrite, range);
         down = Lengthy.addArrays(down, contentWD.readDown());

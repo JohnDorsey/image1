@@ -12,8 +12,10 @@ public class WackdArray {
     //wacko: a number with an unusual range that wastes certain values when stored pure
     //wackd: a wacko that simply has an unusual number of bits, or can be stored with less bits
         //storing 5, 7, 3, 4, as 101111011100 instead of 00000101000001110000001100000100
-    //wackp: a wacko that has an unusual precision, which may be combined with other wackps of known precision by multiplication
-        //storing 5, 7, 3, 4, as the number 4 + (3*(7)) + (7*(7^2)) + (5*(7^3)) with no waste
+    //wackp: a wacko that has an unusual precision, which may be combined with other wackos of known precision by multiplication
+        //storing 5, 7, 3, 4, as the number 4 + (3*(7)) + (7*(7^2)) + (5*(7^3)) with little waste
+    //wackd is a temporary placeholder for wackp, the holy grail of signal compression. wackp can ideally store a signal with up to twice the efficiency of wackd
+
 
     public byte[] up; //the decoded, displayable data.
     public byte[] down; //the encoded, savable data.
@@ -38,9 +40,9 @@ public class WackdArray {
         System.out.println("the wackdLength is " + wackdLength);
 
 
-        for (int i = 0; i < toWrite.length; i++) {
-            System.out.println(Lengthy.byteToString(toWrite[i]) + " IN " + i);
-        }
+        //for (int i = 0; i < toWrite.length; i++) {
+        //    System.out.println(Lengthy.byteToString(toWrite[i]) + " IN " + i);
+        //}
 
         down = new byte[((toWrite.length * wackdLength) / 8 ) + 1];
         BitSet nDown = new BitSet();
@@ -55,15 +57,15 @@ public class WackdArray {
         for (int i = 0; i < (nDown.length() + 7); i++ ) {
             addingNow = Lengthy.setBit(addingNow, i % 8, nDown.get(i));
             if ((i+1) % 8 == 0) {
-                System.out.println(Lengthy.byteToString(addingNow) + " ADDING TO INDEX " + (i / 8));
+            //    System.out.println(Lengthy.byteToString(addingNow) + " ADDING TO INDEX " + (i / 8));
                 down[(i) / 8] = addingNow;
                 addingNow = 0;
             }
         }
 
-        for (int i = 0; i < down.length; i++) {
-            System.out.println(Lengthy.byteToString(down[i]) + " OUT " + i);
-        }
+        //for (int i = 0; i < down.length; i++) {
+        //    System.out.println(Lengthy.byteToString(down[i]) + " OUT " + i);
+        //}
 
     }
 
