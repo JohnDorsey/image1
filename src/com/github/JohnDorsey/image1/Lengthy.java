@@ -1,5 +1,6 @@
 package com.github.JohnDorsey.image1;
 
+import java.io.ByteArrayOutputStream;
 import java.util.BitSet;
 
 /**
@@ -61,6 +62,15 @@ public class Lengthy {
             }
         }
         return result;
+    }
+
+    public static byte[] addArrays(byte[] array1, byte[] array2) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            outputStream.write(array1);
+            outputStream.write(array2);
+        } catch (java.io.IOException ioe) { System.out.println("Langthy.addArrays(byte[], byte[]): IOException: " + ioe); }
+        return outputStream.toByteArray();
     }
 
 

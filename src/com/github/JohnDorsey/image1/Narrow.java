@@ -1,5 +1,8 @@
 package com.github.JohnDorsey.image1;
 
+import com.sun.tools.javac.util.ArrayUtils;
+//import org.apache.commons.lang3;
+
 import java.util.BitSet;
 
 /**
@@ -10,6 +13,7 @@ public class Narrow {
     public byte[] up; //decoded, displayable data
     public byte[] down; //encoded, savable data.
                         //both are always stored while the program is running. it is impossible to change one without also changing the other.
+    public WackdArray contentWD;
 
     public byte range; //the range of values present
     public byte lowest; //the lowest value present
@@ -18,19 +22,18 @@ public class Narrow {
     public Narrow() {
     }
 
-    public void writeDown(byte[] toWrite, int scanLength) { //determines decoded ("up") form based on declaration of encoded ("down") form
+    public void writeDown(byte[] toWrite) { //determines decoded ("up") form based on declaration of encoded ("down") form
         down = new byte[toWrite.length]; //actual encoded version was just declared, no need to do more work later
+        byte[] downt = new byte[toWrite.length - 2];
         lowest = down[0];
         range = down[1];
 
         for (int i = 2; i < toWrite.length; i++) {
             down[i] = toWrite[i];
+            downt[i -2] = toWrite[i];
         }
 
-
-        for (int i = 0; i < down.length; i++) {
-
-        }
+        used = Lengthy.bytesToBitSet(downt);
 
     }
 
@@ -66,12 +69,12 @@ public class Narrow {
             }
         }
 
-        System.out.println(lowest + " " + range + " " + used.toString());
-        System.out.print(lowest + " " + range + " " + (byte) used.length() );
-        for (int i = 0; i < used.length(); i++) {
-            System.out.print(" " + used.get(i));
-        }
-        System.out.print("\n");
+        //System.out.println(lowest + " " + range + " " + used.toString());
+        //System.out.print(lowest + " " + range + " " + (byte) used.length() );
+        //for (int i = 0; i < used.length(); i++) {
+        //    System.out.print(" " + used.get(i));
+        //}
+        //System.out.print("\n");
 
         byte[] abwUsed = Lengthy.bitSetToBytes(used);
 
@@ -81,6 +84,15 @@ public class Narrow {
         for (int i = 0; i < abwUsed.length; i++) {
             down[i + 2] = abwUsed[i];
         }
+
+        contentWD.writeUp(toWrite, range);
+        down = Lengthy.addArrays(down, contentWD.readDown());
+
+        System.out.println();
+        for (byte cb : down) {
+            System.out.print(Byte.toUnsignedInt(cb) + " ");
+        }
+
 
     }
 
