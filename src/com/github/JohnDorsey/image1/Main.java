@@ -73,6 +73,9 @@ public class Main {
         testNarrowB.writeUp(toCompressB[0]);
         //testNarrow.writeUp(new byte[][] {{4, 6, 6, 18}, {6, 6, 18, 16}, {4, 6, 16, 18}, {18, 16, 6, 4} });
 
+        testNarrowBRe.writeDown(testNarrowB.readDown());
+        System.out.println("\n" + Lengthy.bytesToString(testNarrowBRe.readUp()));
+
 
 
 

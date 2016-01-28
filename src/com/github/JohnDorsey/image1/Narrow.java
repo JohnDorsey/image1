@@ -24,11 +24,16 @@ public class Narrow {
 
     public void writeDown(byte[] toWrite) { //determines decoded ("up") form based on declaration of encoded ("down") form
         down = new byte[toWrite.length]; //actual encoded version was just declared, no need to do more work later
+
+        System.out.println("       Narrow writing toWrite: " + Lengthy.bytesToString(toWrite));
+
         byte[] downt = new byte[toWrite.length - 2];
 
         for (int i = 0; i < toWrite.length; i++) {
             down[i] = toWrite[i];
         }
+
+        System.out.println("          Narrow writing down: " + Lengthy.bytesToString(toWrite) + " identical?");
 
         lowest = down[0];
         range = down[1];
@@ -41,7 +46,7 @@ public class Narrow {
 
         byte[] downWD = new byte[(down.length - range) - 2];
 
-        for (int i = range; i < down.length; i++) {
+        for (int i = range + 2; i < down.length; i++) {
             downWD[i - range - 2] = down[i];
         }
 
@@ -49,6 +54,19 @@ public class Narrow {
 
         up = contentWD.readUp();
 
+        for (int val = 0; val < used.length(); val++) {
+            for (int i = 0; i < up.length; i++) {
+                if (up[i] == val && (!used.get(val))) {
+                    up[i]++;
+                }
+            }
+        }
+
+        for (int i = 0; i < up.length; i++) {
+            //up[i] += lowest;
+        }
+
+        System.out.print("Narrow writeDown resulting up: " + Lengthy.bytesToString(up));
 
 
     }
@@ -57,7 +75,11 @@ public class Narrow {
 
     public void writeUp(byte[] toWrite) { //determines encoded ("down") form based on a declaration of decoded ("up") form
 
+
+
         up = new byte[toWrite.length];
+
+        System.out.println("            Narrow writing up: " + Lengthy.bytesToString(toWrite));
 
         range = toWrite[0];
         lowest = toWrite[0];
@@ -67,6 +89,9 @@ public class Narrow {
             range = (byte) Math.max(range, toWrite[i]);
             lowest = (byte) Math.min(lowest, toWrite[i]);
         }
+
+        System.out.println("            Narrow writing up: " + Lengthy.bytesToString(up) + " Identical?");
+
 
         for (int i = 0; i < toWrite.length; i++) {
             toWrite[i] -= lowest;
@@ -112,12 +137,13 @@ public class Narrow {
             System.out.print(Byte.toUnsignedInt(cb) + " ");
         }
 
+        System.out.println("\n" + "Narrow writeUp resulting down: " + Lengthy.bytesToString(down));
 
     }
 
-    //public byte[] readDown() { //returns encoded form
-
-    //}
+    public byte[] readDown() { //returns encoded form
+        return down;
+    }
 
     public byte[] readUp() { //returns decoded form
         return up;

@@ -98,9 +98,9 @@ public class WackdArray {
             }
         }
 
-        for (int i = 0; i < up.length; i++) {
-            System.out.println(Lengthy.byteToString(up[i]) + " writeDown up");
-        }
+        //for (int i = 0; i < up.length; i++) {
+        //    System.out.println(Lengthy.byteToString(up[i]) + " writeDown up");
+        //}
 
 
     }
